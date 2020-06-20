@@ -1,5 +1,7 @@
 import asyncio
+import sys
 import threading
+import traceback
 
 
 class EventLoopThread(threading.Thread):
@@ -25,3 +27,15 @@ class EventLoopThread(threading.Thread):
         self.event_loop.call_soon_threadsafe(self.event_loop.stop)
         self.event_loop_closed.wait(timeout)
         super().join(timeout=0.2)
+
+
+async def loud_run_inner(coro):
+    try:
+        return await coro
+    except Exception as e:
+        traceback.print_exc(file=sys.stderr)
+        raise
+
+
+def loud_run(coro, loop):
+    return asyncio.run_coroutine_threadsafe(loud_run_inner(coro), loop)

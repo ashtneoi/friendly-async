@@ -1,17 +1,16 @@
-import asyncio
-
 import friendly_async
 
 
 async def hi():
     print("hi!")
+    raise Exception("oh noooo")
     return 4
 
 
 def main():
     thread = friendly_async.EventLoopThread()
     thread.start()
-    f = asyncio.run_coroutine_threadsafe(hi(), thread.event_loop)
+    f = friendly_async.loud_run(hi(), thread.event_loop)
     print(f.result())
 
 
