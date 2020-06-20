@@ -27,7 +27,7 @@ class EventLoopThread(threading.Thread):
     def join(self, timeout=None):
         self.event_loop.call_soon_threadsafe(self.event_loop.stop)
         self.event_loop_closed.wait(timeout)
-        super().join(timeout=0.2)
+        return super().join(timeout=0.2)
 
 
 async def loud_call(coro):
