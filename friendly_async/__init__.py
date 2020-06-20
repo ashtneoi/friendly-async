@@ -30,7 +30,7 @@ class EventLoopThread(threading.Thread):
         super().join(timeout=0.2)
 
 
-async def loud_run_inner(coro):
+async def loud_call(coro):
     try:
         return await coro
     except Exception as e:
@@ -40,4 +40,4 @@ async def loud_run_inner(coro):
 
 
 def loud_run(coro, loop):
-    return asyncio.run_coroutine_threadsafe(loud_run_inner(coro), loop)
+    return asyncio.run_coroutine_threadsafe(loud_call(coro), loop)
