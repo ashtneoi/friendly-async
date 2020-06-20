@@ -1,4 +1,5 @@
 import asyncio
+import concurrent.futures
 import sys
 import threading
 import traceback
@@ -33,7 +34,8 @@ async def loud_run_inner(coro):
     try:
         return await coro
     except Exception as e:
-        traceback.print_exc(file=sys.stderr)
+        if not isinstance(e, concurrent.futures.CancelledError):
+            traceback.print_exc(file=sys.stderr)
         raise
 
 
