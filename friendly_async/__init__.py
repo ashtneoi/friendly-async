@@ -34,8 +34,8 @@ async def loud_call(coro):
     try:
         return await coro
     except Exception as e:
-        if not isinstance(e, concurrent.futures.CancelledError):
-            traceback.print_exc(file=sys.stderr)
+        # if not isinstance(e, concurrent.futures.CancelledError):
+        traceback.print_exc(file=sys.stderr)
         raise
 
 
